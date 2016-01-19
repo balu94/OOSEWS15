@@ -22,6 +22,7 @@ public class Arena{
 			_glad1 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);
 		}
 		System.out.println("Es kaempfen : "+ _glad1.getName()+ " vs "+ _glad2.getName());
+
 		
 	}
 	
@@ -35,20 +36,78 @@ public class Arena{
 		return _glad2;
 	}
 	
-	public boolean starteKampfRunde(){
+	public boolean starteKampfRunde() 
+  	{
+			Wuerfel w6  = new Wuerfel(6);
+			
+
+		// Glad1 Angreifer, Glad2 Verteidiger
+		if (_glad1.attacke()) 
+		{
+			if (_glad2.parade()) 
+			{
+				System.out.printf("\n\n| X | O |   |"); // erfolgreiche Parade von Glad2
+				_reporter.giveNewMessage("\n\n| X | O |   |");
+			}
+			else // misslungene Parade von Glad2 -> Glad1 attackiert Glad2 erfolgreich.
+			{
+				int schaden = _glad1.calcTrefferPunkte();// zuvor w6.wuerfle();
+				System.out.printf("\n\n| X | - | %d |", schaden);
+				String s = "\n\n| X | - |"+schaden+"|";
+				_reporter.giveNewMessage(s);
+				if (!_glad2.nehmeSchaden(schaden)) return false; // Kampf abbrechen!
+			}
+		}
+		else  // misslungene Attacke von Glad1
+		{
+			System.out.printf("\n\n| - | - |   |");
+			_reporter.giveNewMessage("\n\n| - | - |  |");
+		}
+		
+		// Glad1 Angreifer, Glad2 Verteidiger
+		if (_glad2.attacke()) 
+		{
+			if (_glad1.parade()) 
+			{
+				System.out.printf("\n| O | X |   |");
+				_reporter.giveNewMessage("\n\n| 0 | X |  |");
+			}
+
+			else 
+			{
+				int schaden = _glad2.calcTrefferPunkte(); // zuvor w6.wuerfle();
+				System.out.printf("\n| - | X | %d |", schaden);
+				String s = "\n\n| - | X |"+schaden+"|";
+				_reporter.giveNewMessage(s);
+				if (!_glad1.nehmeSchaden(schaden)) return false; // Kampf abbrechen!
+			}
+		}
+		else 
+		{
+			System.out.printf("\n| - | - |   |");
+			_reporter.giveNewMessage("\n\n| - | - |  |");
+		}
+	
+		return true;
+	}
+	
+	public boolean starteKampfRunde2(){
 	
 		Wuerfel w6 = new Wuerfel(6);
 	
 		if (_glad1.attacke()){
 			System.out.println(_glad1.getName() + " attackiert");
+			_reporter.giveNewMessage(_glad1.getName() + " attackiert");
 			System.out.println();
 			if(_glad2.parade()){
 				System.out.println(_glad2.getName() + " kann blocken");
 				System.out.println();
+				_reporter.giveNewMessage(_glad2.getName() + " kann blocken");
 			}
 			else {
 				System.out.println(_glad2.getName() + " wird getroffen");
 				System.out.println();
+				_reporter.giveNewMessage(_glad2.getName() + " wird getroffen");
 				
 				// boolean treffer2=_glad2.nehmeSchaden(w6.wuerfle());
 				
@@ -96,11 +155,11 @@ public class Arena{
 	
 	public void starteKampf(){
 		
-		
-			while(starteKampfRunde()==true){
-				try{
+		_reporter.giveNewMessage("Es kaempfen : "+ _glad1.getName()+ " vs "+ _glad2.getName());
+		while(starteKampfRunde()==true){
+				/*try{
 					Thread.sleep (1500); // 1,5s schlafen, um den Kampf "live" zu verfolgen
-				} catch (Exception e){ } // Try-Catch ist nötig, dass Thread.sleep mittels throws-Direktive angibt eine InterruptedException zu werfen.
+				} catch (Exception e){ }*/ // Try-Catch ist nötig, dass Thread.sleep mittels throws-Direktive angibt eine InterruptedException zu werfen.
 			}
 		
 	

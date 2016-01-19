@@ -30,6 +30,9 @@ public class MyFrame extends JFrame implements IReporter {
 	public MyFrame(String title)
 	{
 		super(title);
+		_arena = new Arena(this);
+		//this.giveNewMessage("test");
+		
 		_label = new JLabel("Geldbetrag: "+_geld+" Sesterzen");
 		add(_label, java.awt.BorderLayout.NORTH);
 		
@@ -39,14 +42,12 @@ public class MyFrame extends JFrame implements IReporter {
 		_cboGladiator = new JComboBox();
 		_cboGladiator.addItem(_arena.getGlad1());
 		_cboGladiator.addItem(_arena.getGlad2());
-//		_cboGladiator.addItem(arena.uebergabeGlad1());
-//		_cboGladiator.addItem(arena.uebergabeGlad2());
 		add(_cboGladiator, java.awt.BorderLayout.WEST);
 		
 		scroll = new JScrollPane(txtKampfBericht);
 		this.getContentPane().add(scroll, java.awt.BorderLayout.CENTER);
 		
-		_wettbetrag = new JTextField("Wettbetrag");
+		_wettbetrag = new JTextField();
 		_wettbetrag.setPreferredSize(new Dimension(50, 30));
 		JPanel jpan = new JPanel();
 //		add(_wettbetrag, java.awt.BorderLayout.EAST);
@@ -60,8 +61,6 @@ public class MyFrame extends JFrame implements IReporter {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				txtKampfBericht.setText("Los gehts!");
-				txtKampfBericht.append("TEST");
 				_arena.starteKampf();  // Kampf starten
 				
 			}

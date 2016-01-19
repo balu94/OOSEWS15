@@ -1,99 +1,96 @@
-public class Gladiator{
+public class Gladiator
+{
+  private String _name;
+  private int _at, _pa, _rs, _le;
+  private Waffe _waffe;
 
-	private String _name;
-	private int _at; // Attackewert
-	private int _pa;//Paradewert
-	private int _rs;//Rüstschutz
-	private int _le;//Lebensenergie
 
-	Gladiator(String Name){
-		
-		this._name = Name;
-		
-		_rs=0;
-		
-		Wuerfel w6= new Wuerfel(6);
-		
-		_at= 5+ w6.wuerfle();
-		_pa= 5+ w6.wuerfle();
-		_le= 30 + w6.wuerfle();
-		
-	}
+  public Gladiator(String name)
+  {
+    Wuerfel w6= new Wuerfel(6);
+    int w=w6.wuerfle();
+    // System.out.println("Ausgabe w: "+w);
+    // System.out.println(w6.wuerfle());
+    _name = name;
+    _at= w+5;
+    _pa= w+5;
+    _rs= 0;
+    _le= w+30;
+    _waffe = Waffe.createWaffe();
+    // System.out.println("Gladiator mit Name "+_name+" erzeugt!");
 
-	public boolean attacke(){		
-		Wuerfel w20 = new Wuerfel(20);
+  }
 
-		if (w20.wuerfle()<=_at){
-			return true;
-		}
-		else{
-			return false;
-		}
-			
-	}
-	
-	public boolean parade(){
-		
-		Wuerfel w20= new Wuerfel(20);
-		
-		if (w20.wuerfle()<=_pa){
-			return true;
-		}
-		else{
-			return false;
-	
-		}
-	}
-	
-	public boolean nehmeSchaden(int tp){
-	
-		int sp= tp-_rs;
-		
-		_le = _le-sp;
-		
-		
-		if (_le<5 && _le>0){
-			System.out.println(_name+" ist kampfunfaehig");
-			return false;
-		}
-		if (_le<=0){
-			System.out.println(_name+" ist tot");
-			return false;
-		}
-	
-		return true;
-	
-	}
-	
-	public String getName(){
-		return _name;
-	}
-	
-	public static void main (String [] args){
-        Gladiator g1 = new Gladiator ("Spartakus");
-		Gladiator g2 = new Gladiator ("Commodus");
-		
-		//Alle Eigenschaften des ersten Gladiators
-		System.out.printf ("%s: Attackewert - %d, Paradewert - %d, Lebenspunkte - %d. ", g1._name, g1._at, g1._pa, g1._le ); 
-		//Alle Eigenschaften des zweiten Gladiators
-		System.out.printf ("\n%s: Attackewert - %d, Paradewert - %d, Lebenspunkte - %d.\n ", g2._name, g2._at, g2._pa, g2._le );
-		
-		System.out.println ();
-		
-		
-		if (g1.attacke() && !g2.parade()){
-			g2.nehmeSchaden(10);
-				
-			System.out.println (g1._name + " attackiert erfolgreich -> " + "Lebensenergie: " + g1._le);  
-			System.out.println (g2._name + " parade misslingt -> " + "Lebensenergie: " + g2._le);
-		} else {
-			g1.nehmeSchaden(10);
-		
-			System.out.println (g1._name + " parade misslingt -> " + "Lebensenergie: " + g1._le);  
-			System.out.println (g2._name + " attackiert erfolgreich -> " + "Lebensenergie: " + g2._le);
-		}
-		
-	}
+  public int calcTrefferPunkte() 
+  {
+    return _waffe.calcTrefferPunkte();
+  }
 
-	
+/*  public static void main(String[] args)
+  {
+    Gladiator herkules = new Gladiator("herkules");
+    System.out.println(herkules);
+
+    for (int i=1; i<=10; i++) 
+    {  
+      System.out.printf("Test-Attacke:\t%b\n", herkules.attacke());
+      System.out.printf("Test-Parade:\t%b\n", herkules.parade());
+      System.out.printf("\n");
+    }
+
+
+    System.out.println("Nehme Schaden: "+herkules.nehmeSchaden(5));
+    System.out.println(herkules);
+  }
+*/
+
+
+  @Override // signalisiert Kompiler, dass Methode überschrieben wird. Schutzmechanismus
+  public String toString()
+  {
+	  return this._name;
+//	  return "_at: "+this._at+ " _pa: "+this._pa+" _rs: "+this._rs+" _le: "+this._le+" Waffe:"+this._waffe;
+  }
+
+  public boolean attacke()
+  {
+    Wuerfel w20 = new Wuerfel(20);
+    int augensumme = w20.wuerfle();
+    if(augensumme<=this._at) return true;
+    return false;
+  }
+
+  // getter für Name  
+  public String getName()
+  {
+    return this._name;
+  }
+
+  public boolean parade()
+  {
+    Wuerfel w20 = new Wuerfel(20);
+    int augensumme = w20.wuerfle();
+    if(augensumme<=this._pa) return true;
+    return false;
+  }
+
+  public boolean nehmeSchaden(int tp)
+  {
+    // System.out.println("Trefferpunkte: "+tp);
+    tp -= this._rs;
+    this._le -= tp;
+    // System.out.println("Lebensenergie nach Schaden: "+this._le);
+    if(this._le<5)
+    {
+      System.out.println("");
+      System.out.println(this._name+" ist kampfunfähig");
+      return false;
+    }
+    if(this._le<=0)
+    {
+      System.out.println(this._name+" ist tot");
+      return false;
+    }
+    return true;
+  }
 }
