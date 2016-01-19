@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,32 +35,39 @@ public class MyFrame extends JFrame implements IReporter {
 		super(title);
 		_arena = new Arena(this);
 		// this.giveNewMessage("test");
-
-		_label = new JLabel("Geldbetrag: " + _geld + " Sesterzen");
-		_label.setToolTipText("Ihr aktuelles Guthaben");
-		add(_label, java.awt.BorderLayout.NORTH);
-
+		
 		txtKampfBericht = new JTextArea(10, 10);
 		// add(txtKampfBericht, java.awt.BorderLayout.CENTER);
+		
+		// alles in einem JPanel, da thematischer Zusammenhang
+		JPanel jpan = new JPanel();
+		
+		_label = new JLabel("Geldbetrag: " + _geld + " Sesterzen");
+		_label.setToolTipText("Ihr aktuelles Guthaben");
+		this.getContentPane().add(jpan, java.awt.BorderLayout.EAST);
+		jpan.setLayout(new GridLayout(3,1));
+		jpan.add(_label);
 
+		
 		_cboGladiator = new JComboBox<Gladiator>();
 		_cboGladiator.addItem(_arena.getGlad1());
 		_cboGladiator.addItem(_arena.getGlad2());
 		_cboGladiator.setSelectedItem("Wähle.."); // -> Vorauswahl deaktivieren
 		_cboGladiator.setToolTipText("Wählen Sie den Gladiator aus auf den Sie wetten möchten");
-		add(_cboGladiator, java.awt.BorderLayout.WEST);
+		jpan.add(_cboGladiator);
 
+		
 		scroll = new JScrollPane(txtKampfBericht);
 		this.getContentPane().add(scroll, java.awt.BorderLayout.CENTER);
 
 		_wettbetrag = new JTextField();
 		_wettbetrag.setPreferredSize(new Dimension(50, 30));
-		JPanel jpan = new JPanel();
+		
 		// add(_wettbetrag, java.awt.BorderLayout.EAST);
 
-		add(jpan, java.awt.BorderLayout.EAST);
+		
 		_wettbetrag.setToolTipText("Geben Sie ihr den Betrag ein, den Sie einsetzen möchten");
-		jpan.add(_wettbetrag, java.awt.BorderLayout.CENTER);
+		jpan.add(_wettbetrag);
 
 	/*	JButton b1 = new JButton("Kämpfe");
 		jpan.add(b1, java.awt.BorderLayout.NORTH);
@@ -203,6 +211,7 @@ public class MyFrame extends JFrame implements IReporter {
 				} else {
 					sieger = _arena._glad2;
 				}
+				txtKampfBericht.append("\nSieger: "+sieger);
 
 				// ermitteln ob auf sieger gesetzt wurde
 				if (_gladGewettet.getName().equals(sieger.getName())) { // besser
@@ -227,7 +236,7 @@ public class MyFrame extends JFrame implements IReporter {
 					}
 				} else {
 					_geld = _geld - _einsatz;
-					if (_geld == 0) {
+					if (_geld <= 0) {
 						JOptionPane.showMessageDialog(null, "Verlust", "Du bist pleite. ", JOptionPane.ERROR_MESSAGE);
 						System.exit(0);
 
