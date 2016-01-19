@@ -58,6 +58,7 @@ public class MyFrame extends JFrame implements IReporter {
 		// add(_wettbetrag, java.awt.BorderLayout.EAST);
 
 		add(jpan, java.awt.BorderLayout.EAST);
+		_wettbetrag.setToolTipText("Geben Sie ihr den Betrag ein, den Sie einsetzen möchten");
 		jpan.add(_wettbetrag, java.awt.BorderLayout.CENTER);
 
 	/*	JButton b1 = new JButton("Kämpfe");
