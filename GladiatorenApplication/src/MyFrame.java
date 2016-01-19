@@ -36,6 +36,7 @@ public class MyFrame extends JFrame implements IReporter {
 		// this.giveNewMessage("test");
 
 		_label = new JLabel("Geldbetrag: " + _geld + " Sesterzen");
+		_label.setToolTipText("Ihr aktuelles Guthaben");
 		add(_label, java.awt.BorderLayout.NORTH);
 
 		txtKampfBericht = new JTextArea(10, 10);
@@ -45,6 +46,7 @@ public class MyFrame extends JFrame implements IReporter {
 		_cboGladiator.addItem(_arena.getGlad1());
 		_cboGladiator.addItem(_arena.getGlad2());
 		_cboGladiator.setSelectedItem("Wähle.."); // -> Vorauswahl deaktivieren
+		_cboGladiator.setToolTipText("Wählen Sie den Gladiator aus auf den Sie wetten möchten");
 		add(_cboGladiator, java.awt.BorderLayout.WEST);
 
 		scroll = new JScrollPane(txtKampfBericht);
