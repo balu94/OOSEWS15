@@ -1,7 +1,7 @@
 public class Gladiator
 {
   private String _name;
-  private int _at, _pa, _rs, _le;
+  public int _at, _pa, _rs, _le;
   private Waffe _waffe;
 
 

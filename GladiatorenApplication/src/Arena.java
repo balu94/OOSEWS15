@@ -11,8 +11,25 @@ public class Arena{
 	Arena(IReporter rep){
 		
 		_reporter = rep;
-		Wuerfel w20 = new Wuerfel(20);
 		
+		
+		this.waehleNeueGladiatoren();
+/*		_glad1 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);// Gebe mir von Gladiator den Index an der Stelle die gewürfelt worden ist
+		_glad2 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);
+		
+		if (_glad1.getName().equals(_glad2.getName())) //Hier: Die Namen vergleichen!
+		{
+			
+			_glad1 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);
+		}
+		System.out.println("Es kaempfen : "+ _glad1.getName()+ " vs "+ _glad2.getName());*/
+
+		
+	}
+	
+	public void waehleNeueGladiatoren()
+	{
+		Wuerfel w20 = new Wuerfel(20);
 		_glad1 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);// Gebe mir von Gladiator den Index an der Stelle die gewürfelt worden ist
 		_glad2 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);
 		
@@ -22,8 +39,6 @@ public class Arena{
 			_glad1 = new Gladiator(gladiatorenName[w20.wuerfle()-1]);
 		}
 		System.out.println("Es kaempfen : "+ _glad1.getName()+ " vs "+ _glad2.getName());
-
-		
 	}
 	
 	public Gladiator getGlad1()
