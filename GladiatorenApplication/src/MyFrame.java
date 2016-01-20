@@ -53,6 +53,8 @@ public class MyFrame extends JFrame implements IReporter {
 		_cboGladiator.addItem(_arena.getGlad1());
 		_cboGladiator.addItem(_arena.getGlad2());
 		_cboGladiator.setSelectedItem("Wähle.."); // -> Vorauswahl deaktivieren
+//		_cboGladiator.setDefaultLocale(null);
+//		_cboGladiator.setSelectedItem(-1);
 		_cboGladiator.setToolTipText("Wählen Sie den Gladiator aus auf den Sie wetten möchten");
 		jpan.add(_cboGladiator);
 
@@ -62,11 +64,13 @@ public class MyFrame extends JFrame implements IReporter {
 
 		_wettbetrag = new JTextField();
 		_wettbetrag.setPreferredSize(new Dimension(50, 30));
+//		_wettbetrag.setToolTipText("Test");
 		
 		// add(_wettbetrag, java.awt.BorderLayout.EAST);
 
 		
 		_wettbetrag.setToolTipText("Geben Sie ihr den Betrag ein, den Sie einsetzen möchten");
+		
 		jpan.add(_wettbetrag);
 
 	/*	JButton b1 = new JButton("Kämpfe");
@@ -171,6 +175,7 @@ public class MyFrame extends JFrame implements IReporter {
 			
 
 			starteKampf = new JButton("Starte Kampf");
+			starteKampf.setToolTipText("asdhasuhdio");
 			add(starteKampf, java.awt.BorderLayout.SOUTH);
 			starteKampf.addActionListener(new ActionListener() {
 
